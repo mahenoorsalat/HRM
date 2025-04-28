@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Settings,
@@ -16,13 +16,14 @@ import {
 const Sidebar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(window.innerWidth >= 1024); // Open by default on large screens
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const handleToggle = () => {
     setIsOpen((prev) => !prev);
   };
 
   const handleCloseOnOutsideClick = () => {
-    if (window.innerWidth < 1024) setIsOpen(false);
+    if (windowWidth < 1024) setIsOpen(false);
   };
 
   const navItems = [
@@ -34,20 +35,35 @@ const Sidebar = () => {
     { icon: <Folder className="w-6 h-6" />, label: "Attendance", path: "/attendance" },
   ];
 
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+      if (window.innerWidth >= 1024) {
+        setIsOpen(true); // Always open on large screens
+      }
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
-      {/* Menu Button (Visible on all screen sizes) */}
-      <button
-        onClick={handleToggle}
-        className="fixed top-4 left-4 z-50 bg-gray-800 text-white p-2 rounded-full transition-all duration-300"
-      >
-        <Menu className="w-6 h-6" />
-      </button>
+      {/* Menu Button */}
+      {windowWidth < 1024 && (
+        <button
+          onClick={handleToggle}
+          className="fixed top-4 left-4 z-50 bg-gray-800 text-white p-2 rounded-full transition-all duration-300"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
+      )}
 
       {/* Sidebar */}
       <aside
-        className={`bg-white h-screen transition-all duration-300 shadow-lg flex flex-col z-40 fixed top-0 
-          ${isOpen ? "w-64 left-0" : "w-0 -left-64 lg:w-64 lg:left-0"} lg:w-64 md:w-64`}
+        className={`bg-white h-screen transition-all duration-300 shadow-lg flex flex-col z-40 fixed top-0
+          ${isOpen ? "w-64 left-0" : "w-0 -left-64"} 
+          lg:w-64 lg:left-0`}
       >
         {/* Sidebar Header */}
         <div className="p-4 flex items-center justify-between">
@@ -88,7 +104,7 @@ const Sidebar = () => {
           </button>
         </div>
 
-        {/* Bottom Icons: Settings & Help */}
+        {/* Bottom Icons */}
         <div className="p-3">
           <button
             onClick={() => {
@@ -126,8 +142,8 @@ const Sidebar = () => {
         </div>
       </aside>
 
-      {/* Overlay for Mobile (closes sidebar when clicked) */}
-      {isOpen && window.innerWidth < 1024 && (
+      {/* Overlay for Mobile */}
+      {isOpen && windowWidth < 1024 && (
         <div
           className="fixed inset-0 bg-black opacity-50 lg:hidden md:hidden"
           onClick={handleToggle}
