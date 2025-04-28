@@ -44,7 +44,7 @@ function Login() {
                 <a href="#" className="text-sm text-blue-500 hover:underline">Forgot your password?</a>
               </div>
 
-              <button className="w-full shadow-lg bg-yellow-400 hover:bg-yellow-500 rounded-full h-12 text-white font-semibold transition duration-200">
+              <button  onClick={() => navigate("/dashboard")} className="w-full shadow-lg bg-yellow-400 hover:bg-yellow-500 rounded-full h-12 text-white font-semibold transition duration-200">
                 Sign In
               </button>
 
