@@ -61,10 +61,13 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`bg-white h-screen transition-all duration-300 shadow-lg flex flex-col z-40 fixed top-0
-          ${isOpen ? "w-64 left-0" : "w-0 -left-64"} 
-          lg:w-64 lg:left-0`}
-      >
+  className={`bg-white h-screen transition-all duration-300 shadow-lg flex flex-col z-40 
+    fixed top-0 ${isOpen ? "w-64 left-0" : "w-0 -left-64"} 
+    lg:relative lg:w-64 lg:left-0`}
+>
+
+
+
         {/* Sidebar Header */}
         <div className="p-4 flex items-center justify-between">
           <div className="flex items-center space-x-2">
