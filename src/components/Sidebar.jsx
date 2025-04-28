@@ -39,8 +39,7 @@ const Sidebar = () => {
       {/* Menu Button (Visible on all screen sizes) */}
       <button
         onClick={handleToggle}
-        className={`fixed top-4 lg:hidden left-4 z-50 bg-gray-800 text-white p-2 rounded-full transition-all duration-300 
-        ${isOpen ? "left-50" : "left-4"}`}
+        className="fixed top-4 left-4 z-50 bg-gray-800 text-white p-2 rounded-full transition-all duration-300"
       >
         <Menu className="w-6 h-6" />
       </button>
